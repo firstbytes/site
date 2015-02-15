@@ -4,9 +4,20 @@ block content
   h1 The First Bytes Society
   h2 Palatable Programming Education for Everyone.
 
-  p
+  p(style="text-align: center")
     a.apply(href="https://docs.google.com/forms/d/1PmSzT4VHlV4cvdMLuAcQC4gwF2IlNHAk4cJ2yF5zzI4/viewform") Apply Now
+    a.apply(href="#donate") Donate
 
+  div(style="padding: 10px 20px; background: #ccc; margin: 20px 0;")
+    p
+      :markdown
+        _**Pilot Program Update:** First Bytes Society is hosting an Info Session **February 16th at 7pm** at the Union Project in East Liberty. The event is free but
+        we request that attendees [RSVP online](http://www.showclix.com/event/FirstBytesSocietyInfo). Anyone that is interested in the program &dash; students, parents, mentors,
+        software engineers, media, teachers, sponsors &dash; is encouraged
+        to attend. We will be discussing the mission of First Bytes, reviewing the plans for the pilot program, and introducing the First Bytes
+        Society's learning environment. **The weekly classes are scheduled to begin March 30th and run until May 18th.**_
+
+  a(name="what")
   h3 The What
   p
     :markdown
@@ -14,6 +25,7 @@ block content
         First Bytes focuses on organizing programs and building projects that teach the basic ideas of programming in a palatable way. These
         programs are specifically intended to reach a younger and diverse audience.
 
+  a(name="why")
   h3 The Why
   p
     :markdown
@@ -22,6 +34,7 @@ block content
         programs and open them up to a larger audience, at an earlier age, we all stand to benefit. Learning how to
         program isn't just for the "nerds", the A+ students or even for the future computer scientists. It's for everyone.
 
+  a(name="how")
   h3 The How
   p
     :markdown
@@ -34,15 +47,81 @@ block content
         education should work and these thoughts will guide how we build our tools and curriculum. First Bytes' philosphy when it comes to education
         is to encourage exploration over explanation.
 
-  h3 Feeling our Vibe?
+  a(name="donate")
+  h3 Donate
+
+  p(style="text-align:center")
+    span#thanks
+    button.donate-button(data-amount="1000") Donate $10
+    button.donate-button(data-amount="2000") Donate $20
+    button.donate-button(data-amount="5000") Donate $50
+
   p
     :markdown
-        You should [contact First Bytes](mailto:nate@firstbytes.org) to see how you and or your organization can get involved in our
-        mission. If you're interested in donating to First Bytes, you can set up a recurring donation on [gratipay.com](https://gratipay.com/FirstBytes/).
-
-        If you or your child are interested in joining the program, please fill out our [online application](https://docs.google.com/forms/d/1PmSzT4VHlV4cvdMLuAcQC4gwF2IlNHAk4cJ2yF5zzI4/viewform).
+      First Bytes is currently fundraising to operate our pilot. Donations will be used to purchase netbooks, pay hosting costs, and cover other expenses for the first
+      brick and mortar class.
 
   p
     :markdown
-        You're still reading? Maybe you should checkout our [Code Education Manifesto](https://github.com/firstbytes/firstbytes/blob/master/README.md) or the beginnings of our
-        [Open Source Programming Environment](https://github.com/firstbytes/firstbytes).
+       First Bytes Society aims to operate as an open and transparent organization.  In accordance with this mission our [Expenses, Income, and Budget](https://docs.google.com/spreadsheets/d/1UhHE-ESHad9jQWgHjpAzFXi7VmzusfpcxedA2UfiVI4/edit?usp=sharing) are all publicly accessible.
+
+  a(name="sponsor")
+  h3 Become a Netbook Sponsor
+  p(style="text-align:center")
+    button.donate-button(data-amount="25000") Sponsor a Netbook: Donate $250
+
+  p
+    :markdown
+      You can donate online using our secure online donation process, powered by Stripe, by clicking on the buttons above. For a $250 donation, you or your organization can sponsor a netbook for
+      use in the classroom. Sponsors of a netbook can have the netbook custom branded with their organization's branding. First Bytes will get in touch with your organization upon receiving your donation.
+
+  p
+    :markdown
+      _[New Sun Rising](http://www.newsunrising.org/current-projects/) provides 501(c)(3) fiscal sponsorship for First Bytes Society,
+      and as such, donations to First Bytes Society qualify as charitable tax deductable donations._
+
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+  script(src="https://checkout.stripe.com/checkout.js")
+  script.
+    var handler = StripeCheckout.configure({
+      //- key: 'pk_test_frzWYpcTna4eEgYpS2sjHu2O',
+      key: 'pk_live_3jMtayo4of7VRQfJcXLtkCTU',
+      //- image: '/square-image.png',
+      token: function(token) {
+        $(".donate-button").hide();
+        $('#thanks').html('Thanks! You should receive a receipt in your inbox shortly. If you signed up for a specific sponsorship, we will be in touch with you via email.');
+      }
+    });
+
+    $('.donate-button').on('click', function(e) {
+      var val = $(this).attr('data-amount');
+      handler.open({
+        name: 'First Bytes Society',
+        description: 'Donation to First Bytes Society',
+        currency: 'usd',
+        amount: val
+      });
+      e.preventDefault();
+    });
+
+    // Close Checkout on page navigation
+    $(window).on('popstate', function() {
+      handler.close();
+    });
+
+  //- p
+  //-   :markdown
+  //-     You can also set up a recurring donation using [Gratipay](https://gratipay.com/FirstBytes/).
+
+  a(name="contact")
+  h3 Contact us
+  p
+    :markdown
+      [Contact First Bytes](mailto:nate@firstbytes.org) to see how you and or your organization can get involved in our
+      mission.
+
+      If you or your child are interested in joining the program, please fill out our [online application](https://docs.google.com/forms/d/1PmSzT4VHlV4cvdMLuAcQC4gwF2IlNHAk4cJ2yF5zzI4/viewform). Applications are due by March 16th.
+
+  p
+    :markdown
+        You're still reading? Maybe you should checkout our [Code Education Manifesto](https://github.com/firstbytes/firstbytes/blob/master/README.md).

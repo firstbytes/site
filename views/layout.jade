@@ -3,8 +3,7 @@ html
   head
     title= title
     //- link(rel='stylesheet', href='/css/style.css')
-    link(href="http://fonts.googleapis.com/css?family=Codystar", rel="stylesheet", type="text/css")
-    //- script(src='http://localhost:35729/livereload.js')
+    link(href="https://fonts.googleapis.com/css?family=Codystar", rel="stylesheet", type="text/css")
     style(type='text/css').
         html {
             padding: 0;
@@ -19,13 +18,13 @@ html
           font-size: 72px;
           font-weight: normal;
           text-align: center;
-          margin: 0 0 10px 0;}
-        h1 { display: none; }
+          margin: 0 0 20px 0;}
         h2 { font-size: 32px;}
         h3 {
             text-align: left;
             font-size: 24px;
-            font-weight: normal;}
+            font-weight: normal;
+            margin: 20px 0 20px 0;}
         em {
           font-style: italic;
           line-height: 1;
@@ -47,11 +46,11 @@ html
           padding: 0px;
           margin: 0px;}
         a.apply {
-          margin: 0 auto;
+          margin: 0 20px;
           text-transform: uppercase;
           text-decoration: none;
           font-size: 36px;
-          display: block;
+          display: inline-block;
           background: #333;
           color: #fff;
           padding: 5px 0;
@@ -60,6 +59,16 @@ html
           border: none;}
         p {
           line-height: 1.5;}
+        .donate-button {
+          background: #ccc;
+          padding: 10px;
+          border: none;
+          border-radius: 3px;
+          color: #333;
+          margin: 5px;
+          font-size: 17px;
+          cursor: pointer;
+        }
 
   body
     block content
