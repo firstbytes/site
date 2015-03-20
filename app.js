@@ -27,6 +27,33 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.post('/charge', function(req, res) {
+
+var stripe = require("stripe")("sk_live_n8znuY0cCl1trxMFfiKoTZYb");
+//var stripe = require("stripe")("sk_test_pJXULe1jdmlpGBntwZqogzWj");
+
+var stripeToken = req.body.token,
+  email = req.body.email,
+  amount = req.body.amount;
+
+// console.log(req.body);
+
+var charge = stripe.charges.create({
+  amount: amount, // amount in cents, again
+  currency: "usd",
+  source: stripeToken,
+  receipt_email: email,
+  description: email, 
+}, function(err, charge) {
+console.log(charge, err);
+  if (err) {
+    res.json({error: 'Card Declined'});
+  } else {
+    res.json({error: null});
+  }
+});
+
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

@@ -75,7 +75,7 @@ block content
   p
     :markdown
       _[New Sun Rising](http://www.newsunrising.org/current-projects/) provides 501(c)(3) fiscal sponsorship for First Bytes Society,
-      and as such, donations to First Bytes Society qualify as charitable tax deductable donations._
+      and as such, donations to First Bytes Society qualify as charitable tax deductible donations._
 
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
   script(src="https://checkout.stripe.com/checkout.js")
@@ -83,20 +83,33 @@ block content
     var handler = StripeCheckout.configure({
       //- key: 'pk_test_frzWYpcTna4eEgYpS2sjHu2O',
       key: 'pk_live_3jMtayo4of7VRQfJcXLtkCTU',
-      //- image: '/square-image.png',
       token: function(token) {
-        $(".donate-button").hide();
-        $('#thanks').html('Thanks! You should receive a receipt in your inbox shortly. If you signed up for a specific sponsorship, we will be in touch with you via email.');
+        console.log(token);
+        $.ajax("/charge", {
+          type: "post",
+          //-contentType: "json",
+          //-dataType: "json",
+          data: {
+            token: token.id,
+            amount: amount,
+            email: token.email
+          },
+          success: function(status, body, xhr) {
+            $(".donate-button").hide();
+            $('#thanks').html('Thanks! You should receive a receipt in your inbox shortly. If you signed up for a specific sponsorship, we will be in touch with you via email.');
+          }
+        });
       }
     });
 
+    var amount= 0;
     $('.donate-button').on('click', function(e) {
-      var val = $(this).attr('data-amount');
+      amount = $(this).attr('data-amount');
       handler.open({
-        name: 'First Bytes Society',
-        description: 'Donation to First Bytes Society',
+        name: 'New Sun Rising',
+        description: 'Donation to First Bytes Society through our fiscal sponsor, New Sun Rising',
         currency: 'usd',
-        amount: val
+        amount: amount 
       });
       e.preventDefault();
     });
