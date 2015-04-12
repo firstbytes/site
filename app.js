@@ -6,7 +6,8 @@
 var express = require('express'),
     routes = require('./routes'),
     http = require('http'),
-    path = require('path');
+    path = require('path'),
+    conf = require('./conf');
 
 var app = express();
 
@@ -29,8 +30,7 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.post('/charge', function(req, res) {
 
-var stripe = require("stripe")("sk_live_n8znuY0cCl1trxMFfiKoTZYb");
-//var stripe = require("stripe")("sk_test_pJXULe1jdmlpGBntwZqogzWj");
+var stripe = require("stripe")(conf.liveKey);
 
 var stripeToken = req.body.token,
   email = req.body.email,
@@ -43,7 +43,7 @@ var charge = stripe.charges.create({
   currency: "usd",
   source: stripeToken,
   receipt_email: email,
-  description: email, 
+  description: email,
 }, function(err, charge) {
 console.log(charge, err);
   if (err) {
